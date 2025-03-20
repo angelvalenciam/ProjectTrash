@@ -1,0 +1,64 @@
+{
+
+  "menu": [
+    {
+      "url": "/",
+      "name": "Home",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "pages-home",
+      "roles": ["admin", "escritor"]
+    },
+    {
+      "url": "/page-2",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Disponer",
+      "slug": "pages-page-2",
+      "roles": ["escritor"]
+    },
+    {
+      "url": "/rencompensas",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": " Recompensas User",
+      "slug": "recompensas-user",
+      "roles": ["escritor"]
+    },
+
+    {
+      "url": "/historicos",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Historicos",
+      "slug": "historicos-user",
+      "roles": ["escritor"]
+    },
+    {
+      "url": "/page-3",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Recompensas",
+      "slug": "pages-page-3",
+      "roles": ["escritor"]
+    },
+    {
+      "url": "/dashboard",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Dashboard",
+      "slug": "dashboard",
+      "roles": ["admin"]
+    },
+    {
+      "_comentario": "Control de usuarios",
+      "url": "/usercontrol",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Usuarios",
+      "slug": "user-control",
+      "roles": ["admin"]
+    },
+    {
+      "_comentario": "Control de usuarios",
+      "url": "/recompensasA",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Recompensas",
+      "slug": "recompensas-admin",
+      "roles": ["admin"]
+    }
+  ]
+}
