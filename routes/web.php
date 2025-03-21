@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
-
+use App\Http\Controllers\AwsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,14 +54,14 @@ Route::middleware([
   // Route::get('/recompensasA-create', [$controller_path . '\pages\adminRecompensas', 'create'])->name('recompensa.create')->middleware('role:admin');
   // Route::post('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'store'])->name('recompensa-admin.store')->middleware('role:admin');
   // web.php
-Route::get('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'index'])->name('recompensas-admin')->middleware('role:admin');
-Route::get('/recompensasA-create', [$controller_path . '\pages\adminRecompensas', 'create'])->name('recompensa.create')->middleware('role:admin');
-Route::post('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'store'])->name('recompensa-admin.store')->middleware('role:admin');
-Route::put('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas','update'])->name('recompensa.update')->middleware('role:admin');
-Route::get('/recompensasA/{id}/edit', [$controller_path . '\pages\adminRecompensas','edit'])->name('recompensa.edit')->middleware('role:admin');
+  Route::get('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'index'])->name('recompensas-admin')->middleware('role:admin');
+  Route::get('/recompensasA-create', [$controller_path . '\pages\adminRecompensas', 'create'])->name('recompensa.create')->middleware('role:admin');
+  Route::post('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'store'])->name('recompensa-admin.store')->middleware('role:admin');
+  Route::put('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas', 'update'])->name('recompensa.update')->middleware('role:admin');
+  Route::get('/recompensasA/{id}/edit', [$controller_path . '\pages\adminRecompensas', 'edit'])->name('recompensa.edit')->middleware('role:admin');
 
-// Route::put('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas','update'])->name('recompensa.update')->middleware('role:admin');
-Route::delete('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas','destroy'])->name('recompensa.destroy')->middleware('role:admin');
+  // Route::put('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas','update'])->name('recompensa.update')->middleware('role:admin');
+  Route::delete('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas', 'destroy'])->name('recompensa.destroy')->middleware('role:admin');
 
   // end
 
@@ -78,4 +78,7 @@ Route::delete('/recompensasA/{id}', [$controller_path . '\pages\adminRecompensas
 
   // Solo user puede acceder
   Route::get('/page-2', [$controller_path . '\pages\Page2', 'index'])->name('pages-page-2')->middleware('role:admin');
+  //
+
+  // ruta test
 });

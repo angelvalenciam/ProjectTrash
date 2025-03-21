@@ -311,6 +311,7 @@ $customizerHidden = 'customizer-hide';
                   </div>
                   <!-- Credit Card Details -->
                   <div class="row g-3">
+                    
                     <div class="col-md-12">
                       <label class="form-label w-100" for="multiStepsCard">Card Number</label>
                       <div class="input-group input-group-merge">

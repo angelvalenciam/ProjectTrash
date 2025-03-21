@@ -43,6 +43,9 @@ $customizerHidden = 'customizer-hide';
         <h4 class="mb-2">Registrarme</h4>
         <form id="formAuthentication" class="mb-3" action="{{ route('register') }}" method="POST">
           @csrf
+
+          {{-- datos del empledo --}}
+
           <div class="mb-3">
             <label for="username" class="form-label">Nombre de usuario</label>
             <input type="text" class="form-control @error('name') is-invalid @enderror" id="username" name="name" placeholder="johndoe" autofocus value="{{ old('name') }}" />
@@ -51,7 +54,7 @@ $customizerHidden = 'customizer-hide';
               <strong>{{ $message }}</strong>
             </span>
             @enderror
-          </div>
+          </div>        
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="john@example.com" value="{{ old('email') }}" />

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RecompensaAdmin as ModelsRecompensaAdmin;
-
+use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
+use Aws\Credentials\Credentials;
 class adminRecompensas extends Controller
 {
     // public $routeView = 'content.pages.admin.recompensasAdmin';

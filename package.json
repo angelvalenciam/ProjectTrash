@@ -81,6 +81,7 @@
     "rateyo": "~2.3.5",
     "sass": "^1.49.8",
     "select2": "~4.0.13",
+    "serverless": "^4.9.0",
     "shepherd.js": "~8.3.1",
     "sortablejs": "~1.13.0",
     "spinkit": "~2.0.1",
@@ -101,7 +102,8 @@
     "postcss": "^8.1.14",
     "prettier": "2.0.5",
     "resolve-url-loader": "5.0.0",
-    "sass-loader": "12.1.0"
+    "sass-loader": "12.1.0",
+    "serverless-lift": "^1.31.0"
   },
   "browserslist": [
     ">= 1%",
