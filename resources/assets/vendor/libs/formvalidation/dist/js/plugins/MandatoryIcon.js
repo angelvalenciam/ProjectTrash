@@ -6,9 +6,10 @@
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.MandatoryIcon = factory()));
-})(this, (function () { 'use strict';
+    typeof define === 'function' && define.amd ? define(factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.MandatoryIcon = factory()));
+})(this, (function () {
+  'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -84,7 +85,7 @@
     if (typeof Proxy === "function") return true;
 
     try {
-      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () { }));
       return true;
     } catch (e) {
       return false;
@@ -114,7 +115,7 @@
 
     return function _createSuperInternal() {
       var Super = _getPrototypeOf(Derived),
-          result;
+        result;
 
       if (hasNativeReflectConstruct) {
         var NewTarget = _getPrototypeOf(this).constructor;
@@ -153,7 +154,7 @@
         if (it) o = it;
         var i = 0;
 
-        var F = function () {};
+        var F = function () { };
 
         return {
           s: F,
@@ -177,8 +178,8 @@
     }
 
     var normalCompletion = true,
-        didErr = false,
-        err;
+      didErr = false,
+      err;
     return {
       s: function () {
         it = it.call(o);
@@ -261,7 +262,7 @@
           var _l = "checkbox" === _n || "radio" === _n ? [s[0]] : s;
 
           var _iterator = _createForOfIteratorHelper(_l),
-              _step;
+            _step;
 
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -289,7 +290,7 @@
           var t = [];
 
           var _iterator2 = _createForOfIteratorHelper(n),
-              _step2;
+            _step2;
 
           try {
             for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {

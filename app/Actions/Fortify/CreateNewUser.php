@@ -18,19 +18,47 @@ class CreateNewUser implements CreatesNewUsers
      * @param  array  $input
      * @return \App\Models\User
      */
+    // public function create(array $input)
+    // {
+    //     Validator::make($input, [
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //         'password' => $this->passwordRules(),
+    //         'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+    //     ])->validate();
+
+    //     return User::create([
+    //         'name' => $input['name'],
+    //         'email' => $input['email'],
+    //         'password' => Hash::make($input['password']),
+    //     ]);
+    // }
     public function create(array $input)
     {
+        // dd($input); // Muestra los datos recibidos
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'nombres' => ['required', 'string', 'max:255'],
+            'apellidos' => ['required', 'string', 'max:255'],
+            'ciudad' => ['required', 'string', 'max:255'],
+            'colonia' => ['required', 'string', 'max:255'],
+            'numero_exterior' => ['required', 'string', 'max:255'],
+            'descripcion_vivienda' => ['nullable', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ])->validate();
 
         return User::create([
-            'name' => $input['name'],
+            'username' => $input['username'],  // Cambia 'username' por 'name'
+            'nombres' => $input['nombres'],
+            'apellidos' => $input['apellidos'],
+            'ciudad' => $input['ciudad'],
+            'colonia' => $input['colonia'],
+            'numero_exterior' => $input['numero_exterior'],
+            'descripcion_vivienda' => $input['descripcion_vivienda'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+        
     }
 }

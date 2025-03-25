@@ -15,13 +15,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('username')->unique(); // Nombre de usuario
+            $table->string('nombres'); // Nombre completo
+            $table->string('apellidos');
+            $table->string('ciudad');
+            $table->string('colonia');
+            $table->string('numero_exterior');
+            $table->text('descripcion_vivienda')->nullable();
+            $table->double('tokens', 8, 2)->default(0)->nullable(); // Tokens con dos decimales, inicia en 0
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }
