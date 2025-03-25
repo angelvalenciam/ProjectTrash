@@ -31,6 +31,13 @@
       "roles": ["escritor"]
     },
     {
+      "url": "/registercontainer",
+      "icon": "menu-icon tf-icon bx bx-file",
+      "name": "Dispositivos",
+      "slug": "register-container",
+      "roles": ["escritor"]
+    },
+    {
       "url": "/page-3",
       "icon": "menu-icon tf-icons bx bx-file",
       "name": "Recompensas",

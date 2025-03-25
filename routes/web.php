@@ -48,8 +48,7 @@ Route::middleware([
   //end
 
 
-  // recompensas 
-
+  // recompensas
   // Route::get('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'index'])->name('recompensas-admin')->middleware('role:admin');
   // Route::get('/recompensasA-create', [$controller_path . '\pages\adminRecompensas', 'create'])->name('recompensa.create')->middleware('role:admin');
   // Route::post('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'store'])->name('recompensa-admin.store')->middleware('role:admin');
@@ -79,6 +78,11 @@ Route::middleware([
   // Solo user puede acceder
   Route::get('/page-2', [$controller_path . '\pages\Page2', 'index'])->name('pages-page-2')->middleware('role:admin');
   //
+  // registrar contenedores
 
+  Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:escritor');
+  Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:escritor');
+
+  // end
   // ruta test
 });

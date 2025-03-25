@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -57,6 +58,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function contenedores()
+    {
+        return $this->belongsToMany(Contenedor::class, 'usuario_contenedor', 'id_usuario', 'id_contenedor');
+    }
 
     /**
      * The accessors to append to the model's array form.
