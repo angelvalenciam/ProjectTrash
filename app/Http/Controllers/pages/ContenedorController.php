@@ -25,12 +25,12 @@ class ContenedorController extends Controller
         ]);
 
         // Iniciar una transacción para garantizar integridad de los datos
-        \DB::beginTransaction();
+        DB::beginTransaction();
         try {
             // 1️⃣ Crear el contenedor
             $contenedor = Contenedor::create([
                 'nombre' => $request->nombre,
-                'numero_de_serie' => $request->numero_serie,
+                'numero_serie' => $request->numero_serie,
             ]);
 
             // 2️⃣ Registrar en usuario_contenedor
