@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
 use App\Http\Controllers\AwsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,8 +31,6 @@ Route::middleware([
   $controller_path = 'App\Http\Controllers';
 
 
-
-
   // Solo admin puede acceder
   Route::get('/', [$controller_path . '\pages\HomePage', 'index'])->name('pages-home')->middleware('role:escritor');
 
@@ -46,7 +45,6 @@ Route::middleware([
   Route::get('/usercontrol', [$controller_path . '\pages\userAdmin', 'index'])->name('user-control')->middleware('role:admin');
 
   //end
-
 
   // recompensas
   // Route::get('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'index'])->name('recompensas-admin')->middleware('role:admin');
@@ -82,7 +80,7 @@ Route::middleware([
 
   Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:escritor');
   Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:escritor');
-
+  Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:escritor');
   // end
   // ruta test
 });

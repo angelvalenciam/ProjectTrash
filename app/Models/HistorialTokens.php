@@ -13,11 +13,12 @@ class HistorialTokens extends Model
 
   public function usuario()
   {
-    return $this->belongsTo(Usuario::class, 'id_usuario');
+    // return $this->belongsTo(Usuariko::class, 'id_usuario');
   }
 
   public function vaciado()
   {
-    return $this->belongsTo(VaciadoContenedor::class, 'id_vaciado');
+    // return $this->belongsTo(VaciadoContenedor::class, 'id_vaciado');
   }
 }
+
