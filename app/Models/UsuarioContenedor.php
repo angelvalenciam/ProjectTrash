@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TipoBasura extends Model
+class UsuarioContenedor extends Model
 {
     use HasFactory;
-    protected $table = 'division_contenedor';
-    protected $fillable = ['numero', 'nombre'];
+    protected $table = 'usuario_contenedor';
+    protected $fillable = ['id_usuario', 'id_contenedor'];
 }
