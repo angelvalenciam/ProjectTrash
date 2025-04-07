@@ -24,11 +24,7 @@
                             <input type="text" class="form-control" id="nombre" name="nombre"
                                 placeholder="Nombre del dispositivo" required />
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="numero_serie">Número de serie</label>
-                            <input type="text" class="form-control" id="numero_serie" name="numero_serie"
-                                placeholder="Ingrese el número de serie" required />
-                        </div>
+
                         <button type="submit" class="btn btn-primary">Registrar</button>
                     </form>
 {{--                    <table class="table">--}}

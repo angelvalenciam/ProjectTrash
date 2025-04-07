@@ -64,6 +64,8 @@ Route::middleware([
 
   // Solo recompensas puede acceder
   Route::get('/page-3', [$controller_path . '\pages\Recompensas', 'index'])->name('pages-page-3')->middleware('role:escritor');
+
+
   //end
 
   // Rencompensas real
@@ -74,13 +76,23 @@ Route::middleware([
   //end
 
   // Solo user puede acceder
-  Route::get('/page-2', [$controller_path . '\pages\Page2', 'index'])->name('pages-page-2')->middleware('role:admin');
+  // Route::get('/contenedor/{id}/niveles', [$controller_path . '\pages\Page2',  'niveles'])->middleware('role:escritor');
+  Route::get('/page-2', [$controller_path . '\pages\Page2', 'index'])->name('pages-page-2')->middleware('role:escritor');
+  Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2',  'showContainerData'])->middleware('role:escritor');
+  Route::post('/contenedor/vaciar', [$controller_path . '\pages\Page2', 'vaciarContenedor'])->middleware('role:escritor');
+
+
+  //ahora quiero que al darle al boton vaciar, quiero que se guarde en la siguiente tabla vaciado_contenedor,
   //
   // registrar contenedores
 
   Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:escritor');
   Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:escritor');
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:escritor');
+
+  Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:admin');
+  Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:admin');
+  Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
 
   // end
   // ruta test

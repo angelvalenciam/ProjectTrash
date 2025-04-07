@@ -21,4 +21,7 @@ class DivisionContenedores extends Model
   {
     return $this->belongsTo(TipoBasura::class, 'id_tipo_basura');
   }
+
 }
+
+
