@@ -15,4 +15,5 @@ class Contenedor extends Model
     {
         return $this->belongsToMany(User::class, 'usuario_contenedor', 'id_contenedor', 'id_usuario');
     }
+
 }

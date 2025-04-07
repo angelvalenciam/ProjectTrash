@@ -81,6 +81,7 @@ Route::middleware([
   Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:escritor');
   Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:escritor');
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:escritor');
+
   // end
   // ruta test
 });

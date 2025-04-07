@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TipoBasura extends Model
 {
     use HasFactory;
-    protected $table = 'division_contenedor';
+    protected $table = 'tipobasura';
     protected $fillable = ['numero', 'nombre'];
 }
