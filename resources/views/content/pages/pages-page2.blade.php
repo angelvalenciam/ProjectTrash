@@ -37,64 +37,80 @@
                     .then(response => response.json())
                     .then(data => {
                         const nivelesContainer = document.getElementById('niveles-container');
-                        nivelesContainer.innerHTML = ''; // Limpiar los niveles previos
+                        nivelesContainer.innerHTML = '';
 
                         data.forEach(tipo => {
                             const card = `
                                     <x-card-containers
-                                     title="${tipo.id_tipo_basura}"
+                                    title="${tipo.id_tipo_basura}"
                                     desc="Esta basura se refiere a ${tipo.id_tipo_basura.toLowerCase()}"
-                                   kg="${tipo.cantidad_kg}"
-                                   info=" "
-                                 >
-                               <button onclick="vaciarContenedor( 104)">Vaciar</button>
-                               </x-card-containers>
-    `;
+                                    kg="${tipo.cantidad_kg}"
+                                    info=" ">
+                                    <button onclick="vaciarContenedor(${tipo.id})">Vaciar</button>
+                                  </x-card-containers>
+                          `;
+                            nivelesContainer.innerHTML += card;
+                            console.log(tipo.id)
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener los niveles:', error));
+            }
+
+        });
+
+        function vaciarContenedor(id) {
+            fetch('/contenedor/vaciar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        id_division_contenedor: id
+                    })
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        alert('Contenedor vaciado exitosamente.');
+                        document.getElementById('contenedor-select').dispatchEvent(new Event('change'));
+                    } else {
+                        alert('Error: ' + (result.error || 'No se pudo vaciar el contenedor.'));
+                    }
+                })
+                .catch(error => console.error('Error al vaciar:', error));
+                console.log(id);
+        }
+    </script>
+    {{-- <script>
+        document.getElementById('contenedor-select').addEventListener('change', function() {
+            const contenedorId = this.value;
+
+            if (contenedorId) {
+                fetch(`/page-3/contenedor/${contenedorId}/niveles`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const nivelesContainer = document.getElementById('niveles-container');
+                        nivelesContainer.innerHTML = '';
+
+                        data.forEach(tipo => {
+                            const card = `
+            <x-card-containers
+              title="${tipo.id_tipo_basura}"
+              desc="Esta basura se refiere a ${tipo.id_tipo_basura.toLowerCase()}"
+              kg="${tipo.cantidad_kg}"
+              info=" "
+            >
+              <button onclick="vaciarContenedor(${tipo.id})">Vaciar</button>
+            </x-card-containers>
+          `;
                             nivelesContainer.innerHTML += card;
                         });
                     })
                     .catch(error => console.error('Error al obtener los niveles:', error));
             }
         });
-    </script>
-    <script>
-        function vaciarContenedor(idDivision) {
-            if (!idDivision) {
-                alert("ID de división no válido");
-                return;
-            }
+    </script> --}}
 
-            const cantidad = prompt("Ingrese la cantidad a vaciar en kg:");
-            if (!cantidad || isNaN(cantidad)) {
-                alert("Cantidad inválida");
-                return;
-            }
-
-            fetch("/contenedor/vaciar", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        id_division_contenedor: idDivision,
-                        cantidad_vaciada: cantidad
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Vaciado exitoso");
-                        document.getElementById('contenedor-select').dispatchEvent(new Event('change'));
-                    } else {
-                        alert(data.error || "Error al vaciar");
-                    }
-                })
-                .catch(err => {
-                    console.error("Error:", err);
-                    alert("Error al vaciar contenedor.");
-                });
-        }
-    </script>
 
 @endsection

@@ -1,3 +1,6 @@
+
+
+
 <?php
 
 namespace App\Http\Controllers\pages;
@@ -8,7 +11,6 @@ use App\Models\TipoBasura;
 use App\Models\VaciarContenedor;
 use App\Models\User;
 use App\Models\DivisionContenedores;
-use Aws\Api\Validator;
 use Illuminate\Http\Request;
 
 class Page2 extends Controller
@@ -38,7 +40,6 @@ class Page2 extends Controller
       // Formatea la respuesta
       $data = $divisionContenedores->map(function ($division) {
         return [
-          'id' => $division->id, // <-- Agregado
           'id_tipo_basura' => $division->tipoBasura->nombre,
           'cantidad_kg' => $division->cantidad_kg,
         ];
@@ -50,12 +51,10 @@ class Page2 extends Controller
       return response()->json(['error' => 'Error en la consulta: ' . $e->getMessage()], 500);
     }
   }
-
   public function niveles($id)
   {
     try {
       $divisiones = DivisionContenedores::where('id_contenedor', $id)->get();
-      dd($divisiones);
       return response()->json($divisiones->map(function ($d) {
         return [
           'id' => $d->id,
@@ -68,65 +67,47 @@ class Page2 extends Controller
     }
 
   }
+
   // vaciar
-  // public function vaciarContenedor(Request $request)
-  // {
-  //   try {
-  //     // Validar solo que se envíe el id
-  //     $validated = $request->validate([
-  //       'id_division_contenedor' => 'required|integer|exists:division_contenedores,id'
-  //     ]);
-
-  //     // Buscar la división
-  //     $divisionContenedor = DivisionContenedores::find($validated['id_division_contenedor']);
-
-  //     if (!$divisionContenedor) {
-  //       return response()->json(['error' => 'Contenedor no encontrado'], 404);
-  //     }
-
-  //     // Guardamos la cantidad antes de vaciar
-  //     $cantidadVaciada = $divisionContenedor->cantidad_kg;
-
-  //     // Vaciar el contenedor
-  //     $divisionContenedor->cantidad_kg = 0;
-  //     $divisionContenedor->cantidad_restante = 0;
-  //     $divisionContenedor->save();
-
-  //     // Registrar vaciado
-  //     VaciarContenedor::create([
-  //       'id_division_contenedor' => $divisionContenedor->id,
-  //       'id_usuario' => auth()->id(),
-  //       'cantidad_vaciada' => $cantidadVaciada
-  //     ]);
-
-  //     return response()->json(['success' => true]);
-
-  //   } catch (\Exception $e) {
-  //     return response()->json(['error' => 'Error al procesar la solicitud'], 500);
-
-  //   }
-  // }
   public function vaciarContenedor(Request $request)
   {
+    dd($request); 
     try {
-      // Validamos que se mande un ID
-      $id = $request->input('id_division_contenedor');
-      // dd($request->all()); <-- QUÍTALO
+      // Validar los datos de la solicitud
+      $validated = $request->validate([
+        'id_division_contenedor' => ' ',
+        'cantidad_vaciada' => '  '
+      ]);
 
-      // Lo buscamos
-      $division = DivisionContenedores::find($id);
+      // Obtener el contenedor
+      $divisionContenedor = DivisionContenedores::find($validated['id']);
 
-      if (!$division) {
-        return response()->json(['error' => 'No encontrado'], 404);
+      if (!$divisionContenedor) {
+        return response()->json(['error' => 'Contenedor no encontrado'], 404);
       }
 
-      // SOLO ACTUALIZAMOS cantidad_kg
-      $division->cantidad_kg = 0;
-      $division->save();
+      // Verificar la cantidad de residuos disponible
+      if ($divisionContenedor->cantidad_kg < $validated['cantidad_vaciada']) {
+        return response()->json(['error' => 'No hay suficiente cantidad de residuos para vaciar'], 400);
+      }
+
+      $divisionContenedor->cantidad_kg -= $validated['cantidad_vaciada'];
+      // Actualizar la cantidad restante en el contenedor
+      $divisionContenedor->cantidad_restante -= $validated['cantidad_vaciada'];
+      $divisionContenedor->save();
+
+      // Registrar el vaciado en la base de datos
+      VaciarContenedor::create([
+        'id_division_contenedor' => $validated['id_division_contenedor'],
+        'id_usuario' => auth()->id(),
+        'cantidad_vaciada' => $validated['cantidad_vaciada']
+      ]);
 
       return response()->json(['success' => true]);
+
     } catch (\Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 500);
+
+      return response()->json(['error' => 'Error al procesar la solicitud'], 500);
     }
   }
 
