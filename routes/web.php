@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
 use App\Http\Controllers\AwsController;
-
+use App\Exports\HistoricoResiduosExport;
+use App\Http\Controllers\pages\ReporteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,6 +77,10 @@ Route::middleware([
   Route::get('/historicos', [$controller_path . '\pages\historicos','index'])
   ->middleware(['auth:sanctum', 'verified', 'role:escritor'])
   ->name('historicos-user');
+  // exportar excel historicos
+  // Route::get('/exportar-historico', [HistoricoResiduosExport::class, 'export'])->name('exportar-historico');
+  Route::get('/exportar-historico', [ReporteController::class, 'exportarHistorico'])->name('exportar-historico');
+
 
   //end
 
@@ -87,7 +92,7 @@ Route::middleware([
   // Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
 
-  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert']);
+  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');;
 
 
   //ahora quiero que al darle al boton vaciar, quiero que se guarde en la siguiente tabla vaciado_contenedor,

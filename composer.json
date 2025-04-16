@@ -10,6 +10,7 @@
   "require": {
     "php": "^8.0.2",
     "aws/aws-sdk-php": "^3.342",
+    "barryvdh/laravel-dompdf": "^3.1",
     "fruitcake/laravel-cors": "^2.0.5",
     "guzzlehttp/guzzle": "^7.2",
     "laravel/framework": "^9.0",
@@ -19,6 +20,7 @@
     "livewire/livewire": "^2.5",
     "maatwebsite/excel": "^3.1",
     "nunomaduro/laravel-desktop-notifier": "^2.6",
+    "simplesoftwareio/simple-qrcode": "^4.2",
     "spatie/laravel-permission": "^6.16"
   },
   "require-dev": {

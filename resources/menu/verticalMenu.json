@@ -18,7 +18,7 @@
     {
       "url": "/rencompensas",
       "icon": "menu-icon tf-icons bx bx-file",
-      "name": " Recompensas User",
+      "name": " Recompensas",
       "slug": "recompensas-user",
       "roles": ["escritor"]
     },
@@ -46,7 +46,7 @@
     {
       "url": "/page-3",
       "icon": "menu-icon tf-icons bx bx-file",
-      "name": "Recompensas",
+      "name": "No usar",
       "slug": "pages-page-3",
       "roles": ["escritor"]
     },

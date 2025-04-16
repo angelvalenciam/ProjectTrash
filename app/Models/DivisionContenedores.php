@@ -21,6 +21,9 @@ class DivisionContenedores extends Model
   {
     return $this->belongsTo(TipoBasura::class, 'id_tipo_basura');
   }
+  public function division() {
+    return $this->belongsTo(VaciarContenedor::class, 'id_division_contenedor');
+}
 
 }
 
