@@ -34,15 +34,13 @@
             border: none;
             cursor: pointer;
         }
-
-        .btn-red {
-            background-color: rgb(18, 56, 223);
-            color: white;
+        .btn-red{
+          background-color: rgb(18, 56, 223);
+          color: white;
         }
-
-        .btn-red:hover {
-            background-color: rgb(241, 38, 11);
-            color: #fff;
+        .btn-red:hover{
+          background-color: rgb(241, 38, 11);
+          color: #fff;
         }
     </style>
     <h1>Disponer residuos</h1>
@@ -86,88 +84,88 @@
     </div>
 
     <script>
-        let currentId = null;
+      let currentId = null;
 
-        // Mostrar modal de confirmación
-        function showConfirmModal(id) {
-            currentId = id;
-            document.getElementById('confirm-modal').style.display = 'flex';
-        }
+      // Mostrar modal de confirmación
+      function showConfirmModal(id) {
+          currentId = id;
+          document.getElementById('confirm-modal').style.display = 'flex';
+      }
 
-        // Cerrar modal de confirmación
-        function closeConfirmModal() {
-            currentId = null;
-            document.getElementById('confirm-modal').style.display = 'none';
-        }
+      // Cerrar modal de confirmación
+      function closeConfirmModal() {
+          currentId = null;
+          document.getElementById('confirm-modal').style.display = 'none';
+      }
 
-        // Mostrar y cerrar modal de éxito automáticamente
-        function showSuccessModal() {
-            const successModal = document.getElementById('success-modal');
-            successModal.style.display = 'flex';
+      // Mostrar y cerrar modal de éxito automáticamente
+      function showSuccessModal() {
+          const successModal = document.getElementById('success-modal');
+          successModal.style.display = 'flex';
 
-            // Cerrar automáticamente después de 3 segundos
-            setTimeout(() => {
-                closeSuccessModal();
-            }, 3000);
-        }
+          // Cerrar automáticamente después de 3 segundos
+          setTimeout(() => {
+              closeSuccessModal();
+          }, 3000);
+      }
 
-        // Cerrar modal de éxito manualmente
-        function closeSuccessModal() {
-            document.getElementById('success-modal').style.display = 'none';
-        }
+      // Cerrar modal de éxito manualmente
+      function closeSuccessModal() {
+          document.getElementById('success-modal').style.display = 'none';
+      }
 
-        document.getElementById('contenedor-select').addEventListener('change', function() {
-            const contenedorId = this.value;
+      document.getElementById('contenedor-select').addEventListener('change', function () {
+          const contenedorId = this.value;
 
-            if (contenedorId) {
-                fetch(`/page-3/contenedor/${contenedorId}/niveles`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const nivelesContainer = document.getElementById('niveles-container');
-                        nivelesContainer.innerHTML = '';
+          if (contenedorId) {
+              fetch(`/page-3/contenedor/${contenedorId}/niveles`)
+                  .then(response => response.json())
+                  .then(data => {
+                      const nivelesContainer = document.getElementById('niveles-container');
+                      nivelesContainer.innerHTML = '';
 
-                        data.forEach(tipo => {
-                            const card = `
+                      data.forEach(tipo => {
+                          const card = `
                               <x-card-containers
                                   title="${tipo.id_tipo_basura}"
                                   desc="Esta basura se refiere a ${tipo.id_tipo_basura.toLowerCase()}"
                                   kg="${tipo.cantidad_kg}"
                                   info=" ">
-                                <button  class="btn btn-red" onclick="showConfirmModal(${tipo.id})">Vaciar</button>
+                                <button class="btn btn-red" onclick="showConfirmModal(${tipo.id})">Vaciar</button>
 
                               </x-card-containers>
                           `;
-                            nivelesContainer.innerHTML += card;
-                        });
-                    })
-                    .catch(error => console.error('Error al obtener los niveles:', error));
-            }
-        });
+                          nivelesContainer.innerHTML += card;
+                      });
+                  })
+                  .catch(error => console.error('Error al obtener los niveles:', error));
+          }
+      });
 
-        function vaciarContenedor(id) {
-            closeConfirmModal(); // Cierra el modal de confirmación al instante
+      function vaciarContenedor(id) {
+          closeConfirmModal(); // Cierra el modal de confirmación al instante
 
-            fetch('/contenedor/vaciar', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        id_division_contenedor: id
-                    })
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        showSuccessModal(); // Mostrar el modal de éxito
-                        document.getElementById('contenedor-select').dispatchEvent(new Event('change'));
-                    } else {
-                        alert('Error: ' + (result.error || 'No se pudo vaciar el contenedor.'));
-                    }
-                })
-                .catch(error => console.error('Error al vaciar:', error));
-        }
-    </script>
+          fetch('/contenedor/vaciar', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-TOKEN': '{{ csrf_token() }}'
+              },
+              body: JSON.stringify({
+                  id_division_contenedor: id
+              })
+          })
+          .then(response => response.json())
+          .then(result => {
+              if (result.success) {
+                  showSuccessModal(); // Mostrar el modal de éxito
+                  document.getElementById('contenedor-select').dispatchEvent(new Event('change'));
+              } else {
+                  alert('Error: ' + (result.error || 'No se pudo vaciar el contenedor.'));
+              }
+          })
+          .catch(error => console.error('Error al vaciar:', error));
+      }
+  </script>
 
 @endsection

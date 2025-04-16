@@ -73,6 +73,10 @@ Route::middleware([
   //
   //historicos
   Route::get('/historicos', [$controller_path . '\pages\historicos', 'index'])->name('historicos-user')->middleware('role:escritor');
+  Route::get('/historicos', [$controller_path . '\pages\historicos','index'])
+  ->middleware(['auth:sanctum', 'verified', 'role:escritor'])
+  ->name('historicos-user');
+
   //end
 
   // Solo user puede acceder
@@ -82,6 +86,8 @@ Route::middleware([
   Route::post('/contenedor/vaciar', [$controller_path . '\pages\Page2', 'vaciarContenedor'])->middleware('role:escritor');
   // Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
+
+  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert']);
 
 
   //ahora quiero que al darle al boton vaciar, quiero que se guarde en la siguiente tabla vaciado_contenedor,
@@ -97,5 +103,7 @@ Route::middleware([
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
 
   // end
+
+
   // ruta test
 });

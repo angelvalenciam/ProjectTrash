@@ -8,15 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class VaciarContenedor extends Model
 {
   use HasFactory;
+
   protected $table = 'vaciado_contenedor';
+
   protected $fillable = ['id_division_contenedor', 'id_usuario', 'cantidad_vaciada'];
 
-  public function divisionContenedores()
+  // Relación con el usuario que vació el contenedor
+  public function usuario()
   {
-    return $this->hasMany(DivisionContenedores::class, 'id_contenedor');
+      return $this->belongsTo(User::class, 'id_usuario');
   }
-  public function usuarios()
+
+  // Relación con la división del contenedor (si lo necesitas más adelante)
+  public function divisionContenedor()
   {
-    return $this->belongsToMany(User::class, 'usuario_contenedor', 'id_contenedor', 'id_usuario');
+      return $this->belongsTo(DivisionContenedores::class, 'id_division_contenedor');
   }
 }

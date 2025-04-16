@@ -10,18 +10,29 @@ use App\Models\User;
 use App\Models\DivisionContenedores;
 use Aws\Api\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Page2 extends Controller
 {
+  // public function index()
+  // {
+  //   // Consulta los contenedores desde la base de datos
+  //   $contenedores = Contenedor::all();
+
+  //   // Pasar los datos a la vista
+  //   return view('content.pages.pages-page2', compact('contenedores'));
+  // }
   public function index()
   {
-    // Consulta los contenedores desde la base de datos
-    $contenedores = Contenedor::all();
+    $userId = auth()->id();
+    $contenedores = Contenedor::whereIn('id', function ($query) use ($userId) {
+      $query->select('id_contenedor')
+        ->from('usuario_contenedor')
+        ->where('id_usuario', $userId);
+    })->get();
 
-    // Pasar los datos a la vista
     return view('content.pages.pages-page2', compact('contenedores'));
   }
-
   public function showContainerData($id)
   {
     try {
@@ -106,29 +117,76 @@ class Page2 extends Controller
 
   //   }
   // }
+  // public function vaciarContenedor(Request $request)
+  // {
+  //   try {
+  //     // Validamos que se mande un ID
+  //     $id = $request->input('id_division_contenedor');
+  //     // dd($request->all()); <-- QUÍTALO
+
+  //     // Lo buscamos
+  //     $division = DivisionContenedores::find($id);
+
+  //     if (!$division) {
+  //       return response()->json(['error' => 'No encontrado'], 404);
+  //     }
+
+  //     // SOLO ACTUALIZAMOS cantidad_kg
+  //     $division->cantidad_kg = 0;
+  //     $division->save();
+
+  //     return response()->json(['success' => true]);
+  //   } catch (\Exception $e) {
+  //     return response()->json(['error' => $e->getMessage()], 500);
+  //   }
+  // }
   public function vaciarContenedor(Request $request)
   {
     try {
-      // Validamos que se mande un ID
-      $id = $request->input('id_division_contenedor');
-      // dd($request->all()); <-- QUÍTALO
+      // Validar que se haya enviado el id de la división
+      $request->validate([
+        'id_division_contenedor' => 'required|integer|exists:division_contenedor,id'
+      ]);
 
-      // Lo buscamos
-      $division = DivisionContenedores::find($id);
+      // Buscar la división de contenedor
+      $division = DivisionContenedores::find($request->id_division_contenedor);
 
+      // Verificar si existe
       if (!$division) {
-        return response()->json(['error' => 'No encontrado'], 404);
+        return response()->json(['error' => 'División no encontrada'], 404);
       }
 
-      // SOLO ACTUALIZAMOS cantidad_kg
+      // Guardamos la cantidad antes de vaciar
+      $cantidadVaciada = $division->cantidad_kg;
+
+      // 1. Registrar en vaciado_contenedor
+      VaciarContenedor::create([
+        'id_division_contenedor' => $division->id,
+        'id_usuario' => auth()->id(), // el usuario autenticado
+        'cantidad_vaciada' => $cantidadVaciada
+      ]);
+
+      // 2. Vaciar contenedor (actualizar la cantidad a 0)
       $division->cantidad_kg = 0;
       $division->save();
 
       return response()->json(['success' => true]);
+
     } catch (\Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 500);
+      return response()->json(['error' => 'Error al vaciar: ' . $e->getMessage()], 500);
     }
   }
+  public function pruebaInsert()
+  {
+    DB::table('vaciado_contenedor')->insert([
+      'id_division_contenedor' => 22,
+      'id_usuario' => 2, // pon el ID que sí existe
+      'cantidad_vaciada' => 43,
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
 
+    return 'Insert exitoso';
+  }
 }
 

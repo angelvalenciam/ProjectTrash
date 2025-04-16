@@ -17,6 +17,7 @@
     "laravel/sanctum": "^2.14",
     "laravel/tinker": "^2.7",
     "livewire/livewire": "^2.5",
+    "maatwebsite/excel": "^3.1",
     "nunomaduro/laravel-desktop-notifier": "^2.6",
     "spatie/laravel-permission": "^6.16"
   },
