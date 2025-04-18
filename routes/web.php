@@ -71,6 +71,8 @@ Route::middleware([
 
   // Rencompensas real
   Route::get('/rencompensas', [$controller_path . '\pages\recompensasuser', 'index'])->name('recompensas-user')->middleware('role:escritor');
+  Route::post('/recompensas-user/redeem', [$controller_path . '\pages\recompensasuser', 'redeem'])->name('recompensas-user.redeem');
+
   //
   //historicos
   Route::get('/historicos', [$controller_path . '\pages\historicos', 'index'])->name('historicos-user')->middleware('role:escritor');

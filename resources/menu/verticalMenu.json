@@ -13,14 +13,14 @@
       "icon": "menu-icon tf-icons bx bx-file",
       "name": "Disponer",
       "slug": "pages-page-2",
-      "roles": ["escritor"]
+      "roles": ["escritor", "admin"]
     },
     {
       "url": "/rencompensas",
       "icon": "menu-icon tf-icons bx bx-file",
       "name": " Recompensas",
       "slug": "recompensas-user",
-      "roles": ["escritor"]
+      "roles": ["escritor", "admin"]
     },
 
     {
@@ -28,7 +28,7 @@
       "icon": "menu-icon tf-icons bx bx-file",
       "name": "Historicos",
       "slug": "historicos-user",
-      "roles": ["escritor"]
+      "roles": ["escritor", "admin"]
     },
     {
       "url": "/registercontainer",

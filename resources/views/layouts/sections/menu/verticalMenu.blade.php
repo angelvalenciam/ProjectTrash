@@ -2,12 +2,21 @@
     $userRoles = auth()->user()->roles->pluck('name')->toArray(); // Obtener roles del usuario
 @endphp
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  .trash{
+    font-family: "Oleo Script", system-ui;
+  }
+</style>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     @if (!isset($navbarFull))
         <div class="app-brand demo">
             <a href="{{ url('/') }}" class="app-brand-link">
                 <span style="margin-top:2rem;" class="app-brand-text demo menu-text fw-bold ms-2">
-                    <p>Trash two cash</p>
+                    <p class="trash" style>Trash2cash</p>
                 </span>
             </a>
 
