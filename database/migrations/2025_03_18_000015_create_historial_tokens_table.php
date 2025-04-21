@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('historial_tokens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_vaciado')->constrained('vaciado_contenedor')->onDelete('cascade');
             $table->double('tokens_asignados');
             $table->timestamps();

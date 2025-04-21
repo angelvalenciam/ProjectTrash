@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('historial_recompensas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_recompensa')->constrained('recompensas')->onDelete('cascade');
             $table->double('tokens_gastados');
             $table->timestamps();
