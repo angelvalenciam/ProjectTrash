@@ -15,6 +15,7 @@
         <p>Seleccione una recompensa la cual desea canjear</p>
     </div>
 
+
     <!-- Comprobamos si hay recompensas -->
     @if ($recompensas->isEmpty())
         <div class="container-down cont-btn">

@@ -10,20 +10,24 @@ use Illuminate\Support\Facades\DB;
 
 class recompensasuser extends Controller
 {
-  public function index()
-  {
-    $user = auth()->user(); // obtener usuario logueado
+ public function index()
+{
+    // Obtener el usuario autenticado
+    $user = auth()->user();
 
-    // Sumar todos los tokens del usuario autenticado
-    $token = DB::table('historial_tokens')
-      ->where('id_usuario', $user->id)
-      ->sum('tokens_asignados');
+    // Validar que esté logueado
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Debes iniciar sesión para ver tus recompensas.');
+    }
 
-    // Paginación de recompensas
+    // Obtener los tokens directamente del campo "tokens" en la tabla users
+    $token = $user->tokens;
+
+    // Obtener recompensas paginadas
     $recompensas = RecompensaAdmin::paginate(8);
 
     return view('content.pages.rencompensas', compact('token', 'recompensas'));
-  }
+}
 
 
   public function store(Request $request)
@@ -54,27 +58,38 @@ class recompensasuser extends Controller
   }
   public function redeem(Request $request)
   {
-    $user = auth()->user();
-    $recompensaId = $request->input('recompensa_id');
+      $user = auth()->user();  // Obtener el usuario autenticado
+      $recompensaId = $request->input('recompensa_id');  // Obtener el ID de la recompensa seleccionada
 
-    $recompensa = RecompensaAdmin::findOrFail($recompensaId);
-    $userTokens = DB::table('historial_tokens')
-      ->where('id_usuario', $user->id)
-      ->sum('tokens_asignados');
+      // Obtener los datos de la recompensa
+      $recompensa = RecompensaAdmin::findOrFail($recompensaId);
 
-    if ($userTokens < $recompensa->precio) {
-      return back()->with('error', 'No tienes suficientes tokens para esta recompensa.');
-    }
+      // Obtener los tokens disponibles del usuario
+      $userTokens = DB::table('users')
+          ->where('id', $user->id)
+          ->value('tokens');  // Obtenemos directamente los tokens de la tabla users
 
-    // Descontar tokens → creamos un nuevo registro negativo
-    HistorialRecompensas::create([
-      'id_usuario' => $user->id,
-      'id_recompensa' => $recompensa->id,
-      'tokens_gastados' => $recompensa->precio,
-    ]);
+      // Verificar si el usuario tiene suficientes tokens
+      if ($userTokens < $recompensa->precio) {
+          // Si no tiene suficientes tokens, mostramos un mensaje claro
+          return back()->with('error', 'No tienes suficientes tokens para esta recompensa. Tienes ' . $userTokens . ' tokens, pero necesitas ' . $recompensa->precio . ' tokens.');
+      }
 
+      // Descontar los tokens del usuario
+      DB::table('users')
+          ->where('id', $user->id)
+          ->decrement('tokens', $recompensa->precio);  // Decrementamos los tokens directamente
 
-    return back()->with('success', 'Has canjeado exitosamente tu recompensa: ' . $recompensa->titulo);
+      // Registrar el canje de recompensa en el historial
+      HistorialRecompensas::create([
+          'id_usuario' => $user->id,
+          'id_recompensa' => $recompensa->id,
+          'tokens_gastados' => $recompensa->precio,
+      ]);
+
+      // Redirigir con mensaje de éxito
+      return back()->with('success', 'Has canjeado exitosamente tu recompensa: ' . $recompensa->titulo);
   }
+
 
 }

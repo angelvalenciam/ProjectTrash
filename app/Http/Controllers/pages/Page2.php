@@ -158,7 +158,6 @@ class Page2 extends Controller
         'cantidad_vaciada' => $cantidad,
       ]);
 
-      // Verifica que el vaciado se haya creado correctamente
       if (!$vaciado) {
         return response()->json(['error' => 'Error al registrar vaciado'], 500);
       }
@@ -167,23 +166,32 @@ class Page2 extends Controller
       $division->cantidad_kg = 0;
       $division->save();
 
-      // 3. Obtener tokens por kg
+      // 3. Calcular tokens ganados
       $recompensa = TablaPrecios::where('id_tipo_basura', $tipoBasura->id)->first();
       $tokensGanados = $recompensa ? $cantidad * $recompensa->tokens_por_kg : 0;
 
-      // 4. Registrar en HistorialTokens
+      // 4. Registrar en historial de tokens
       HistorialTokens::create([
         'id_usuario' => $usuario->id,
-        'id_vaciado' => $vaciado->id, // Asociamos el vaciado
+        'id_vaciado' => $vaciado->id,
         'tokens_asignados' => $tokensGanados,
       ]);
 
-      return response()->json(['success' => true]);
+      // 5. Sumar tokens al usuario
+      $usuario->tokens += $tokensGanados;
+      $usuario->save();
+
+      return response()->json([
+        'success' => true,
+        'mensaje' => "¡Vaciado exitoso! Has ganado $tokensGanados tokens.",
+        'tokens_totales' => $usuario->tokens
+      ]);
 
     } catch (\Exception $e) {
       return response()->json(['error' => 'Error al vaciar: ' . $e->getMessage()], 500);
     }
   }
+
 
 
 }
