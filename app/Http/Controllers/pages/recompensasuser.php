@@ -91,5 +91,4 @@ class recompensasuser extends Controller
       return back()->with('success', 'Has canjeado exitosamente tu recompensa: ' . $recompensa->titulo);
   }
 
-
 }

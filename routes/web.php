@@ -88,12 +88,19 @@ Route::middleware([
 
   // Solo user puede acceder
   // Route::get('/contenedor/{id}/niveles', [$controller_path . '\pages\Page2',  'niveles'])->middleware('role:escritor');
+  Route::post('/page-2/generar-pdf', [$controller_path . '\pages\Page2',  'generarPDF'])->middleware('role:escritor');
   Route::get('/page-2', [$controller_path . '\pages\Page2', 'index'])->name('pages-page-2')->middleware('role:escritor');
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   Route::post('/contenedor/vaciar', [$controller_path . '\pages\Page2', 'vaciarContenedor'])->middleware('role:escritor');
   // Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
+  //pdf
 
+
+  // routes/web.php
+Route::post('/contenedor/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF']);
+
+  //end
   Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');;
 
 
@@ -110,7 +117,7 @@ Route::middleware([
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
 
   // end
-
+  // generar el psf
 
   // ruta test
 });

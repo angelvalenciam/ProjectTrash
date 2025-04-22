@@ -170,16 +170,6 @@
                 .catch(error => console.error('Error al vaciar:', error));
         }
     </script>
- {{-- prueba  --}}
- {{-- <h1>Ticket de Vaciado</h1>
- <div class="qr">
-   <img src="data:image/png;base64,{{ $qr }}" alt="QR Code">
-   <p>ID Escaneable: {{ $id }}</p>
- </div>
- <div class="datos">
-   <p><strong>Nombre:</strong> {{ $nombre }}</p>
-   <p><strong>Tipo de Basura:</strong> {{ $tipo_basura }}</p>
-   <p><strong>Cantidad:</strong> {{ $cantidad }} Kg</p>
-   <p><strong>Colonia:</strong> {{ $colonia }}</p>
- </div> --}}
+
 @endsection
+ 

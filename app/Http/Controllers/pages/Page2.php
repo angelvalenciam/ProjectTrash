@@ -193,6 +193,42 @@ class Page2 extends Controller
   }
 
 
+// pdf
+public function generarPDF(Request $request)
+{
+  try {
+    // Simulamos datos o los tomamos del request
+    $usuario = auth()->user();
+
+    // Validamos que esté autenticado
+    if (!$usuario) {
+      return response()->json(['error' => 'Usuario no autenticado'], 401);
+    }
+
+    // Puedes recibir el ID de la división desde el request si quieres generar PDF de esa división específica
+    $request->validate([
+      'id_division_contenedor' => 'required|exists:division_contenedor,id'
+    ]);
+
+    $division = DivisionContenedores::with('tipoBasura')->find($request->id_division_contenedor);
+
+    if (!$division) {
+      return response()->json(['error' => 'División no encontrada'], 404);
+    }
+
+    // Cargar la vista y pasarle los datos
+    $pdf = Pdf::loadView('reportes.vaciado-pdf', [
+      'usuario' => $usuario,
+      'division' => $division
+    ]);
+
+    return $pdf->download('reporte-vaciado.pdf');
+
+  } catch (\Exception $e) {
+    return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);
+  }
+}
+
 
 }
 
