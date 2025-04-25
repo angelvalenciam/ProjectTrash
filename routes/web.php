@@ -4,7 +4,19 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
 use App\Http\Controllers\AwsController;
 use App\Exports\HistoricoResiduosExport;
+use App\Http\Controllers\pages\ContenedorController;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\DivisionContenedores;
+use App\Models\Contenedor;
+use App\Models\VaciarContenedor;
+use App\Http\Controllers\pages\Page2;
 use App\Http\Controllers\pages\ReporteController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Endroid\QrCode\Builder\Builder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,9 +88,9 @@ Route::middleware([
   //
   //historicos
   Route::get('/historicos', [$controller_path . '\pages\historicos', 'index'])->name('historicos-user')->middleware('role:escritor');
-  Route::get('/historicos', [$controller_path . '\pages\historicos','index'])
-  ->middleware(['auth:sanctum', 'verified', 'role:escritor'])
-  ->name('historicos-user');
+  Route::get('/historicos', [$controller_path . '\pages\historicos', 'index'])
+    ->middleware(['auth:sanctum', 'verified', 'role:escritor'])
+    ->name('historicos-user');
   // exportar excel historicos
   // Route::get('/exportar-historico', [HistoricoResiduosExport::class, 'export'])->name('exportar-historico');
   Route::get('/exportar-historico', [ReporteController::class, 'exportarHistorico'])->name('exportar-historico');
@@ -88,20 +100,26 @@ Route::middleware([
 
   // Solo user puede acceder
   // Route::get('/contenedor/{id}/niveles', [$controller_path . '\pages\Page2',  'niveles'])->middleware('role:escritor');
-  Route::post('/page-2/generar-pdf', [$controller_path . '\pages\Page2',  'generarPDF'])->middleware('role:escritor');
+  Route::post('/page-2/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF'])->middleware('role:escritor');
   Route::get('/page-2', [$controller_path . '\pages\Page2', 'index'])->name('pages-page-2')->middleware('role:escritor');
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
+  Route::get('/page-2/testp', [$controller_path . '\pages\Page2', 'tst'])->name('ticket.vaciado');
   Route::post('/contenedor/vaciar', [$controller_path . '\pages\Page2', 'vaciarContenedor'])->middleware('role:escritor');
   // Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   //pdf
 
+  ////////////////////////////////////////////////////////////////////////////
+  // Route::get('/ticket-vaciado/{id?}', [Page2::class, 'generarTicketVaciado'])->name('ticket.vaciado');
+
+
 
   // routes/web.php
-Route::post('/contenedor/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF']);
+  Route::post('/contenedor/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF']);
 
   //end
-  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');;
+  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');
+  ;
 
 
   //ahora quiero que al darle al boton vaciar, quiero que se guarde en la siguiente tabla vaciado_contenedor,
@@ -117,7 +135,7 @@ Route::post('/contenedor/generar-pdf', [$controller_path . '\pages\Page2', 'gene
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
 
   // end
-  // generar el psf
 
-  // ruta test
+
+
 });

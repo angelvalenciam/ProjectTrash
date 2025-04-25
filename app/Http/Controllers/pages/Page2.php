@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\pages;
-
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Models\Contenedor;
 use App\Models\TipoBasura;
@@ -17,7 +17,7 @@ use App\Models\Recompensa;
 use App\Models\HistorialRecompensas;
 use App\Models\HistorialTokens;
 use App\Models\TablaPrecios;
-
+use Endroid\QrCode\Builder\Builder;
 class Page2 extends Controller
 {
   public function index()
@@ -184,49 +184,131 @@ class Page2 extends Controller
       return response()->json([
         'success' => true,
         'mensaje' => "¡Vaciado exitoso! Has ganado $tokensGanados tokens.",
-        'tokens_totales' => $usuario->tokens
+        'tokens_totales' => $usuario->tokens,
+        'pdf_url' => route('ticket.vaciado') // esta ruta debe generar y devolver el PDF
       ]);
 
     } catch (\Exception $e) {
       return response()->json(['error' => 'Error al vaciar: ' . $e->getMessage()], 500);
     }
+
   }
 
+  public function generarTicketVaciado($id)
+  {
+    try {
+      $usuario = auth()->user();
 
-// pdf
-public function generarPDF(Request $request)
+      if (!$usuario) {
+        return response()->json(['error' => 'Usuario no autenticado'], 401);
+      }
+
+      // Obtenemos el vaciado y su relación
+      $vaciado = VaciarContenedor::with('divisionContenedor.tipoBasura')
+        ->where('id', $id)
+        ->where('id_usuario', $usuario->id)
+        ->first();
+
+      if (!$vaciado) {
+        return response()->json(['error' => 'Vaciado no encontrado'], 404);
+      }
+
+      $qr = QrCode::format('png')
+        ->size(150)
+        ->margin(10)
+        ->generate("Vaciado ID: $id - Usuario: {$usuario->id}");
+
+      $qrBase64 = 'data:image/png;base64,' . base64_encode($qr);
+
+      $pdf = Pdf::loadView('reportes.vaciado-pdf', [
+        'usuario' => $usuario,
+        'vaciado' => $vaciado,
+        'qrCode' => $qrBase64,
+      ]);
+
+      return $pdf->stream("ticket-vaciado-$id.pdf");
+
+    } catch (\Exception $e) {
+      return response()->json(['error' => 'Error al generar el ticket: ' . $e->getMessage()], 500);
+    }
+  }
+  // pdf
+  public function generarPDF(Request $request)
+  {
+    try {
+      // Simulamos datos o los tomamos del request
+      $usuario = auth()->user();
+
+      // Validamos que esté autenticado
+      if (!$usuario) {
+        return response()->json(['error' => 'Usuario no autenticado'], 401);
+      }
+
+      // Puedes recibir el ID de la división desde el request si quieres generar PDF de esa división específica
+      $request->validate([
+        'id_division_contenedor' => 'required|exists:division_contenedor,id'
+      ]);
+
+      $division = DivisionContenedores::with('tipoBasura')->find($request->id_division_contenedor);
+
+      if (!$division) {
+        return response()->json(['error' => 'División no encontrada'], 404);
+      }
+
+      // Cargar la vista y pasarle los datos
+      $pdf = Pdf::loadView('reportes.vaciado-pdf', [
+        'usuario' => $usuario,
+        'division' => $division
+      ]);
+
+      return $pdf->download('reporte-vaciado.pdf');
+
+    } catch (\Exception $e) {
+      return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);
+    }
+  }
+  public function tst()
 {
-  try {
-    // Simulamos datos o los tomamos del request
-    $usuario = auth()->user();
+    $userId = auth()->id();
 
-    // Validamos que esté autenticado
-    if (!$usuario) {
-      return response()->json(['error' => 'Usuario no autenticado'], 401);
-    }
+    $usuario = User::select('nombres', 'apellidos', 'colonia', 'ciudad', 'numero_exterior')
+        ->where('id', $userId)
+        ->first();
 
-    // Puedes recibir el ID de la división desde el request si quieres generar PDF de esa división específica
-    $request->validate([
-      'id_division_contenedor' => 'required|exists:division_contenedor,id'
+    // Obtener último vaciado con tipo de basura y nombre del contenedor
+    $vaciado = DB::table('vaciado_contenedor as vc')
+        ->join('division_contenedor as dc', 'vc.id_division_contenedor', '=', 'dc.id')
+        ->join('tipobasura as tb', 'dc.id_tipo_basura', '=', 'tb.id')
+        ->join('contenedores as c', 'dc.id_contenedor', '=', 'c.id')
+        ->where('vc.id_usuario', $userId)
+        ->select(
+            'vc.cantidad_vaciada',
+            'tb.nombre as tipo_basura',
+            'c.nombre as nombre_contenedor'
+        )
+        ->latest('vc.created_at')
+        ->first();
+
+    // Generar QR como imagen base64
+    $result = Builder::create()
+        ->data((string) $userId)
+        ->size(150)
+        ->margin(10)
+        ->build();
+
+    $qrBase64 = 'data:image/png;base64,' . base64_encode($result->getString());
+
+    $dompdf = App::make("dompdf.wrapper");
+    $dompdf->loadView("content.pages.pdf", [
+        'usuario' => $usuario,
+        'id' => $userId,
+        'vaciado' => $vaciado?->cantidad_vaciada ?? 0,
+        'tipoBasura' => $vaciado?->tipo_basura ?? 'Desconocido',
+        'contenedorNombre' => $vaciado?->nombre_contenedor ?? 'Sin contenedor',
+        'qrCode' => $qrBase64,
     ]);
 
-    $division = DivisionContenedores::with('tipoBasura')->find($request->id_division_contenedor);
-
-    if (!$division) {
-      return response()->json(['error' => 'División no encontrada'], 404);
-    }
-
-    // Cargar la vista y pasarle los datos
-    $pdf = Pdf::loadView('reportes.vaciado-pdf', [
-      'usuario' => $usuario,
-      'division' => $division
-    ]);
-
-    return $pdf->download('reporte-vaciado.pdf');
-
-  } catch (\Exception $e) {
-    return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);
-  }
+    return $dompdf->stream();
 }
 
 
