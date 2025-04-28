@@ -43,7 +43,6 @@ Route::middleware([
 
   $controller_path = 'App\Http\Controllers';
 
-
   // Solo admin puede acceder
   Route::get('/', [$controller_path . '\pages\HomePage', 'index'])->name('pages-home')->middleware('role:escritor');
 
@@ -58,12 +57,12 @@ Route::middleware([
   Route::get('/usercontrol', [$controller_path . '\pages\userAdmin', 'index'])->name('user-control')->middleware('role:admin');
 
   //end
-
   // recompensas
   // Route::get('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'index'])->name('recompensas-admin')->middleware('role:admin');
   // Route::get('/recompensasA-create', [$controller_path . '\pages\adminRecompensas', 'create'])->name('recompensa.create')->middleware('role:admin');
   // Route::post('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'store'])->name('recompensa-admin.store')->middleware('role:admin');
   // web.php
+
   Route::get('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'index'])->name('recompensas-admin')->middleware('role:admin');
   Route::get('/recompensasA-create', [$controller_path . '\pages\adminRecompensas', 'create'])->name('recompensa.create')->middleware('role:admin');
   Route::post('/recompensasA', [$controller_path . '\pages\adminRecompensas', 'store'])->name('recompensa-admin.store')->middleware('role:admin');
@@ -94,10 +93,7 @@ Route::middleware([
   // exportar excel historicos
   // Route::get('/exportar-historico', [HistoricoResiduosExport::class, 'export'])->name('exportar-historico');
   Route::get('/exportar-historico', [ReporteController::class, 'exportarHistorico'])->name('exportar-historico');
-
-
   //end
-
   // Solo user puede acceder
   // Route::get('/contenedor/{id}/niveles', [$controller_path . '\pages\Page2',  'niveles'])->middleware('role:escritor');
   Route::post('/page-2/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF'])->middleware('role:escritor');
@@ -109,11 +105,6 @@ Route::middleware([
   Route::get('/page-3/contenedor/{id}/niveles', [$controller_path . '\pages\Page2', 'showContainerData'])->middleware('role:escritor');
   //pdf
 
-  ////////////////////////////////////////////////////////////////////////////
-  // Route::get('/ticket-vaciado/{id?}', [Page2::class, 'generarTicketVaciado'])->name('ticket.vaciado');
-
-
-
   // routes/web.php
   Route::post('/contenedor/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF']);
 
@@ -121,11 +112,9 @@ Route::middleware([
   Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');
   ;
 
-
   //ahora quiero que al darle al boton vaciar, quiero que se guarde en la siguiente tabla vaciado_contenedor,
   //
   // registrar contenedores
-
   Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:escritor');
   Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:escritor');
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:escritor');
@@ -133,9 +122,6 @@ Route::middleware([
   Route::get('/registercontainer', [$controller_path . '\pages\ContenedorController', 'index'])->name('register-container')->middleware('role:admin');
   Route::post('/registercontainer', [$controller_path . '\pages\ContenedorController', 'store'])->name('contenedores.store')->middleware('role:admin');
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
-
   // end
-
-
 
 });

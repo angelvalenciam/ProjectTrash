@@ -62,7 +62,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Contenedor::class, 'usuario_contenedor', 'id_usuario', 'id_contenedor');
     }
-
     /**
      * The accessors to append to the model's array form.
      *

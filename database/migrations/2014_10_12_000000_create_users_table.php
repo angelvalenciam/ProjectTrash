@@ -29,11 +29,12 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
     }
 
     /**
      * Reverse the migrations.
-     
+
      * @return void
      */
     public function down()
