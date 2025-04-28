@@ -7,7 +7,9 @@
 @section('title', 'Page 2')
 
 @section('content')
-  @include('example-content.form-elements.forms-basic-inputs');
-  @include('example-content.form-elements.forms-basic-inputs');
-  @include('example-content.form-elements.forms-basic-inputs');
+  <h1>Registrar Recolectores</h1>
+
+
+
+
 @endsection
