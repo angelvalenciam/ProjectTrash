@@ -10,47 +10,6 @@ use Aws\S3\Exception\S3Exception;
 use Aws\Credentials\Credentials;
 class adminRecompensas extends Controller
 {
-    // public $routeView = 'content.pages.admin.recompensasAdmin';
-
-    // public function index()
-    // {
-    //     $recompensa = ModelsRecompensaAdmin::all();
-    //     return view('content.pages.admin.recompensasAdmin', compact('recompensa'));
-    // }
-
-    // public function create()
-    // {
-    //     return view("create");
-    // }
-    // public function store(Request $request)
-    // {
-    //     // Validar los datos del formulario
-    //     $request->validate([
-    //         "nameServicio" => "required",
-    //         "descripcion" => "required",
-    //         "precio" => "required",
-    //         "imagen" => "nullable|image|mimes:jpg,jpeg,png,gif|max:2048" // Validación de la imagen
-    //     ]);
-
-    //     // Subir la imagen si se proporciona
-    //     // Guardar la imagen en el almacenamiento público
-    //     $imagenPath = null;
-    //     if ($request->hasFile('imagen')) {
-    //         // Guardar la imagen en storage/app/public/recompensas
-    //         $imagenPath = $request->file('imagen')->store('public/recompensas');
-    //     }
-
-
-    //     // Crear nueva recompensa en la base de datos
-    //     ModelsRecompensaAdmin::create([
-    //         'titulo' => $request->nameServicio,
-    //         'descripcion' => $request->descripcion,
-    //         'precio' => $request->precio,
-    //         'imagen' => $imagenPath, // Guardar la ruta de la imagen
-    //     ]);
-
-    //     return redirect()->route('recompensas-admin')->with('success', 'Se registró correctamente');
-    // }
     public function index()
     {
         $recompensas = ModelsRecompensaAdmin::paginate(10);
@@ -73,7 +32,6 @@ class adminRecompensas extends Controller
             // Guardar la imagen en storage/app/public/recompensas
             $imagenPath = $request->file('imagen')->store('public/recompensas');
         }
-
 
         // Crear nueva recompensa en la base de datos
         ModelsRecompensaAdmin::create([

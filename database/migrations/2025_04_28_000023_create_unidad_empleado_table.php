@@ -18,7 +18,6 @@ return new class extends Migration {
       $table->foreignId('id_unidad')->constrained('registrar_unidad')->onDelete('cascade');
       $table->foreignId('id_ruta')->constrained('registrar_rutas')->onDelete('cascade');
       $table->timestamps();
-      $table->timestamps();
     });
   }
 

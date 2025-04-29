@@ -29,7 +29,6 @@ $customizerHidden = 'customizer-hide';
       </div>
     </div>
     <!-- /Left Text -->
-
     <!-- Register Card -->
     <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
       <div class="w-px-400 mx-auto">
@@ -41,51 +40,48 @@ $customizerHidden = 'customizer-hide';
           </a>
         </div>
         <!-- /Logo -->
-
         <!-- Register Card -->
         <h4 class="mb-2">Registrarme</h4>
         <form id="formAuthentication" class="mb-3" action="{{ route('register') }}" method="POST">
           @csrf
-
-
+          <div class="mb-3">
+            <label for="type_user" class="form-label">Seleccione el tipo de usuario</label>
+            <select name="type_user" id="type_user" class="form-select" required>
+              <option value="Usuario">Usuario</option>
+              <option value="Empleado">Empleado</option>
+            </select>
+          </div>
           <div class="mb-3">
             <label for="nombres" class="form-label">Nombres</label>
             <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Juan"
               value="{{ old('nombres') }}" />
           </div>
-
           <div class="mb-3">
             <label for="apellidos" class="form-label">Apellidos</label>
             <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Pérez"
               value="{{ old('apellidos') }}" />
           </div>
-
           <div class="mb-3">
             <label for="ciudad" class="form-label">Ciudad</label>
             <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="CDMX"
               value="{{ old('ciudad') }}" />
           </div>
-
           <div class="mb-3">
             <label for="colonia" class="form-label">Colonia</label>
             <input type="text" class="form-control" id="colonia" name="colonia" placeholder="Centro"
               value="{{ old('colonia') }}" />
           </div>
-
           <div class="mb-3">
             <label for="numero_exterior" class="form-label">Número Exterior</label>
             <input type="text" class="form-control" id="numero_exterior" name="numero_exterior" placeholder="123"
               value="{{ old('numero_exterior') }}" />
           </div>
-
           <div class="mb-3">
             <label for="descripcion_vivienda" class="form-label">Descripción Vivienda</label>
             <textarea class="form-control" id="descripcion_vivienda" name="descripcion_vivienda"
               placeholder="Casa de dos pisos, color azul">{{ old('descripcion_vivienda') }}</textarea>
           </div>
-
           {{-- datos del empledo --}}
-
           <div class="mb-3">
             <label for="username" class="form-label">Nombre de usuario</label>
             <input type="text" class="form-control @error('name') is-invalid @enderror" id="username" name="username"

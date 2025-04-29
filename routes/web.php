@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Endroid\QrCode\Builder\Builder;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,8 +54,9 @@ Route::middleware([
   //end
 
   // control users
-
   Route::get('/usercontrol', [$controller_path . '\pages\userAdmin', 'index'])->name('user-control')->middleware('role:admin');
+  Route::post('/usercontrol/register', [$controller_path . '\pages\userAdmin', 'store'])->name('user-control.store')->middleware('role:admin');
+
 
   //end
   // recompensas
@@ -109,8 +111,7 @@ Route::middleware([
   Route::post('/contenedor/generar-pdf', [$controller_path . '\pages\Page2', 'generarPDF']);
 
   //end
-  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');
-  ;
+  Route::get('/probar-insert', [$controller_path . '\pages\Page2', 'pruebaInsert'])->middleware('role:escritor');;
 
   //ahora quiero que al darle al boton vaciar, quiero que se guarde en la siguiente tabla vaciado_contenedor,
   //
@@ -124,4 +125,8 @@ Route::middleware([
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
   // end
 
+  // Recolector
+
+
 });
+

@@ -14,7 +14,7 @@ return new class extends Migration {
   {
     Schema::create('registrar_rutas', function (Blueprint $table) {
       $table->id();
-      $table->string('num_ruta');
+      $table->string('num_ruta')->unique();
       $table->string('colonia')->nullable();
       $table->string('descripcion_vivienda')->nullable();
       $table->integer('cantidad_casas');

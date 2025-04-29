@@ -50,13 +50,8 @@
       "slug": "pages-page-3",
       "roles": ["escritor"]
     },
-    {
-      "url": "/dashboard",
-      "icon": "menu-icon tf-icons bx bx-file",
-      "name": "Dashboard",
-      "slug": "dashboard",
-      "roles": ["admin"]
-    },
+
+
     {
       "_comentario": "Control de usuarios",
       "url": "/usercontrol",
