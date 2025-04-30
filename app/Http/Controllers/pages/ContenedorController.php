@@ -13,13 +13,9 @@ use App\Models\UsuarioContenedor;
 
 class ContenedorController extends Controller
 {
-//  public function index()
-//  {
-//    $containers = Contenedor::all();
-//    return view('content.pages.registercontainer', compact('containers'));
-//  }
   public function index()
   {
+
     $userId = auth()->id();
 
     // Trae solo los contenedores que están relacionados con el usuario actual
@@ -31,7 +27,6 @@ class ContenedorController extends Controller
 
     return view('content.pages.registercontainer', compact('containers'));
   }
-
 
   public function store(Request $request)
   {
@@ -90,10 +85,9 @@ class ContenedorController extends Controller
     return redirect()->route('register-container')->with('success', 'registrado correctamente');
   }
 
-  // funcion para vaciar
-
   public function showDisponerResiduos(Request $request)
   {
+
     $userId = auth()->id();
 
     // Obtener los contenedores del usuario
@@ -115,7 +109,4 @@ class ContenedorController extends Controller
       'divisiones' => $divisiones,
     ]);
   }
-
 }
-// divisioncontenedor es ok
-// usuariocontenedor

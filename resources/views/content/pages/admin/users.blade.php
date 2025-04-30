@@ -45,7 +45,6 @@
             <form id="formAuthentication" class="mb-3" action="{{ route('register') }}" method="POST">
               @csrf
 
-
               <div class="mb-3">
                 <label for="nombres" class="form-label">Nombres</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Juan"
@@ -120,7 +119,6 @@
             </span>
                 @enderror
               </div>
-
               <div class="mb-3 form-password-toggle">
                 <label class="form-label" for="password-confirm">Confirme su contraseña</label>
                 <div class="input-group input-group-merge">
@@ -157,6 +155,5 @@
       </div>
     </div>
   @endsection
-
   {{--  @include('example-content.user-interface.ui-alerts')--}}
 @endsection
