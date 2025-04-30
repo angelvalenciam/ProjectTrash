@@ -25,7 +25,6 @@ $customizerHidden = 'customizer-hide';
       </div>
     </div>
     <!-- /Left Text -->
-
     <!-- Login -->
     <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
       <div class="w-px-400 mx-auto">
@@ -39,7 +38,7 @@ $customizerHidden = 'customizer-hide';
           </a>
         </div>
         <!-- /Logo -->
-        <h4 class="mb-2">Bienvenido Trash two Cash</h4>
+        <h4 class="mb-2">Bienvenido Trash2Cash</h4>
         <p class="mb-4">Por favor inicia sesion o crea una cuenta</p>
 
         @if (session('status'))
