@@ -7,150 +7,7 @@
 @section('title', 'Page 2')
 
 @section('content')
-  <h1>Registrar Recolectores</h1>
-
-{{--  @if(session('success'))--}}
-{{--    <div id="modalclose" class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">--}}
-{{--      <i class="bx bx-xs bx-desktop me-2"></i>--}}
-{{--      Se registro correctamente--}}
-{{--      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">--}}
-{{--      </button>--}}
-{{--    </div>--}}
-{{--  @else--}}
-
-{{--  @endif--}}
-{{--  <!-- Basic with Icons -->--}}
-{{--  <div class="col-xxl">--}}
-{{--    <div class="card mb-4">--}}
-{{--      <div class="card-header d-flex align-items-center justify-content-between">--}}
-{{--        <h5 class="mb-0">Registrar recolector</h5> <small class="text-muted float-end">Usuarios</small>--}}
-{{--      </div>--}}
-{{--      <div class="card-body">--}}
-{{--        <form id="formulario" action=" {{ route('user-control.store') }}" method="POST">--}}
-{{--          @csrf--}}
-{{--          @method('POST')--}}
-{{--          <div class="row mb-3">--}}
-{{--            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Nombres</label>--}}
-{{--            <div class="col-sm-10">--}}
-{{--              <div class="input-group input-group-merge">--}}
-{{--                <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>--}}
-{{--                <input required name="input_name" type="text" class="form-control" id="basic-icon-default-fullname"--}}
-{{--                       placeholder="Nombres" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2"/>--}}
-{{--              </div>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="row mb-3">--}}
-{{--            <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Apellidos</label>--}}
-{{--            <div class="col-sm-10">--}}
-{{--              <div class="input-group input-group-merge">--}}
-{{--                <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>--}}
-{{--                <input required name="input_apellidos" type="text" id="basic-icon-default-company" class="form-control"--}}
-{{--                       placeholder="Apellidos" aria-label="ACME Inc." aria-describedby="basic-icon-default-company2"/>--}}
-{{--              </div>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="row mb-3">--}}
-{{--            <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Email</label>--}}
-{{--            <div class="col-sm-10">--}}
-{{--              <div class="input-group input-group-merge">--}}
-{{--                <span class="input-group-text"><i class="bx bx-envelope"></i></span>--}}
-{{--                <input required name="input_email" type="email" id="basic-icon-default-email" class="form-control"--}}
-{{--                       placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2"/>--}}
-{{--                <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>--}}
-{{--              </div>--}}
-{{--              <div class="form-text"> You can use letters, numbers & periods</div>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="row mb-3">--}}
-{{--            <label class="col-sm-2 form-label" for="basic-icon-default-phone">Num. Telefonico</label>--}}
-{{--            <div class="col-sm-10">--}}
-{{--              <div class="input-group input-group-merge">--}}
-{{--                <span id="basic-icon-default-phone2" class="input-group-text"><i class="bx bx-phone"></i></span>--}}
-{{--                <input required name="input_telefono" type="text" id="basic-icon-default-phone" class="form-control phone-mask"--}}
-{{--                       placeholder="658 799 8941" aria-label="658 799 8941"--}}
-{{--                       aria-describedby="basic-icon-default-phone2"/>--}}
-{{--              </div>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="row mb-3">--}}
-{{--            <div class="col-sm-10">--}}
-{{--              <div class="input-group input-group-merge">--}}
-{{--              </div>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="row justify-content-end">--}}
-{{--            <div class="col-sm-10">--}}
-{{--              <button  id="btnEnviar type="submit" class="btn btn-primary">Registrar</button>--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--        </form>--}}
-{{--      </div>--}}
-{{--    </div>--}}
-{{--  </div>--}}
-{{--  </div>--}}
-
-{{--  @if(session('modal_error'))--}}
-{{--    <!-- Modal -->--}}
-{{--    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">--}}
-{{--      <div class="modal-dialog">--}}
-{{--        <div class="modal-content">--}}
-{{--          <div class="modal-header bg-danger text-white">--}}
-{{--            <h5 class="modal-title" id="errorModalLabel">Error en el registro</h5>--}}
-{{--            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>--}}
-{{--          </div>--}}
-{{--          <div class="modal-body">--}}
-{{--            {{ session('modal_error') }}--}}
-{{--          </div>--}}
-{{--          <div class="modal-footer">--}}
-{{--            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-{{--      </div>--}}
-{{--    </div>--}}
-
-{{--    <div id="loading" style="display: none;">--}}
-{{--      <p>Enviando datos, por favor espere...</p>--}}
-{{--    </div>--}}
-
-{{--    <script>--}}
-
-{{--      document.getElementById('formulario').addEventListener('submit', function() {--}}
-{{--        // Mostrar el mensaje de cargando--}}
-{{--        document.getElementById('loading').style.display = 'block';--}}
-
-{{--        // Deshabilitar el botón para evitar envíos múltiples--}}
-{{--        document.getElementById('btnEnviar').disabled = true;--}}
-{{--      });--}}
-{{--    </script>--}}
-
-{{--    <script>--}}
-{{--      document.addEventListener('DOMContentLoaded', function () {--}}
-{{--        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));--}}
-{{--        errorModal.show();--}}
-{{--      });--}}
-{{--    </script>--}}
-{{--  @endif--}}
-
-{{--  <script>--}}
-
-{{--    document.addEventListener('DOMContentLoaded', function () {--}}
-{{--      const timeModal = document.getElementById('modalclose');--}}
-{{--      if (timeModal) {--}}
-{{--        setTimeout(function () {--}}
-{{--          timeModal.style.display = 'none';--}}
-{{--          console.log('Modal cerrado automáticamente');--}}
-{{--        }, 1000); // 1 segundo--}}
-{{--      }--}}
-{{--    });--}}
-
-{{--  </script>--}}
-
-{{--  ----------------------------------}}
-
-
-
-
-
+  <h1>Registrar Recolectores</h1>\
   @section('page-style')
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset(mix('assets/vendor/css/pages/page-auth.css')) }}">
@@ -162,9 +19,7 @@
         <!-- /Left Text -->
         <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center">
           <div class="flex-row text-center mx-auto">
-            {{-- <img src="{{asset('assets/img/pages/register-'.$configData['style'].'.png')}}" alt="Auth Cover Bg color"
-              width="520" class="img-fluid authentication-cover-img" data-app-light-img="pages/register-light.png"
-              data-app-dark-img="pages/register-dark.png"> --}}
+
             <div class="mx-auto">
               <img style="width: 25rem; border-radius: 5rem; margin: 1rem; box-shadow: 1px 1px 20px rgba(0,0,0,0.9);"
                    src="{{ asset('assets/img/logo.jpg') }}" alt="Logo">
@@ -180,8 +35,7 @@
             <!-- Logo -->
             <div class="app-brand mb-4">
               <a href="{{url('/')}}" class="app-brand-link gap-2 mb-2">
-                {{-- <span class="app-brand-logo demo">@include('_partials.macros')</span> --}}
-                {{-- <span class="app-brand-text demo h3 mb-0 fw-bold">{{config('variables.templateName')}}</span> --}}
+
               </a>
             </div>
             <!-- /Logo -->

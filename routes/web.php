@@ -125,8 +125,10 @@ Route::middleware([
   Route::delete('/registercontainer/{id}', [$controller_path . '\pages\ContenedorController', 'destroy'])->name('contenedores.destroy')->middleware('role:admin');
   // end
 
+
   // Recolector
-
-
+// Recolector
+  Route::get('/recolectar', [$controller_path . '\pages\recolectar', 'index'])->name('recolectar')->middleware('role:recolector');
+  Route::post('/recolectar/registrar', [$controller_path . '\pages\recolectar', 'store'])->name('recolectar.registrar')->middleware('role:recolector');
 });
 

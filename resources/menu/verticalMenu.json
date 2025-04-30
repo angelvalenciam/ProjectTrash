@@ -67,6 +67,14 @@
       "name": "Recompensas",
       "slug": "recompensas-admin",
       "roles": ["admin"]
+    },
+    {
+      "_comentario": "Control de usuarios",
+      "url": "/recolectar",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Recolectar basura",
+      "slug": "recolectar-basura",
+      "roles": ["recolector"]
     }
   ]
 }

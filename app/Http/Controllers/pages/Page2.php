@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\pages;
+
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Models\Contenedor;
@@ -18,6 +19,7 @@ use App\Models\HistorialRecompensas;
 use App\Models\HistorialTokens;
 use App\Models\TablaPrecios;
 use Endroid\QrCode\Builder\Builder;
+
 class Page2 extends Controller
 {
   public function index()
@@ -31,6 +33,7 @@ class Page2 extends Controller
 
     return view('content.pages.pages-page2', compact('contenedores'));
   }
+
   public function showContainerData($id)
   {
     try {
@@ -77,42 +80,7 @@ class Page2 extends Controller
     }
 
   }
-  // public function vaciarContenedor(Request $request)
-  // {
-  //   try {
-  //     // Validar que se haya enviado el id de la división
-  //     $request->validate([
-  //       'id_division_contenedor' => 'required|integer|exists:division_contenedor,id'
-  //     ]);
 
-  //     // Buscar la división de contenedor
-  //     $division = DivisionContenedores::find($request->id_division_contenedor);
-
-  //     // Verificar si existe
-  //     if (!$division) {
-  //       return response()->json(['error' => 'División no encontrada'], 404);
-  //     }
-
-  //     // Guardamos la cantidad antes de vaciar
-  //     $cantidadVaciada = $division->cantidad_kg;
-
-  //     // 1. Registrar en vaciado_contenedor
-  //     VaciarContenedor::create([
-  //       'id_division_contenedor' => $division->id,
-  //       'id_usuario' => auth()->id(), // el usuario autenticado
-  //       'cantidad_vaciada' => $cantidadVaciada
-  //     ]);
-
-  //     // 2. Vaciar contenedor (actualizar la cantidad a 0)
-  //     $division->cantidad_kg = 0;
-  //     $division->save();
-
-  //     return response()->json(['success' => true]);
-
-  //   } catch (\Exception $e) {
-  //     return response()->json(['error' => 'Error al vaciar: ' . $e->getMessage()], 500);
-  //   }
-  // }
 
   public function pruebaInsert()
   {
@@ -126,6 +94,7 @@ class Page2 extends Controller
 
     return 'Insert exitoso';
   }
+
   // prueba
   public function vaciarContenedor(Request $request)
   {
@@ -232,6 +201,7 @@ class Page2 extends Controller
       return response()->json(['error' => 'Error al generar el ticket: ' . $e->getMessage()], 500);
     }
   }
+
   // pdf
   public function generarPDF(Request $request)
   {
@@ -267,49 +237,52 @@ class Page2 extends Controller
       return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);
     }
   }
+
   public function tst()
-{
+  {
     $userId = auth()->id();
 
     $usuario = User::select('nombres', 'apellidos', 'colonia', 'ciudad', 'numero_exterior')
-        ->where('id', $userId)
-        ->first();
+      ->where('id', $userId)
+      ->first();
 
     // Obtener último vaciado con tipo de basura y nombre del contenedor
     $vaciado = DB::table('vaciado_contenedor as vc')
-        ->join('division_contenedor as dc', 'vc.id_division_contenedor', '=', 'dc.id')
-        ->join('tipobasura as tb', 'dc.id_tipo_basura', '=', 'tb.id')
-        ->join('contenedores as c', 'dc.id_contenedor', '=', 'c.id')
-        ->where('vc.id_usuario', $userId)
-        ->select(
-            'vc.cantidad_vaciada',
-            'tb.nombre as tipo_basura',
-            'c.nombre as nombre_contenedor'
-        )
-        ->latest('vc.created_at')
-        ->first();
+      ->join('division_contenedor as dc', 'vc.id_division_contenedor', '=', 'dc.id')
+      ->join('tipobasura as tb', 'dc.id_tipo_basura', '=', 'tb.id')
+      ->join('contenedores as c', 'dc.id_contenedor', '=', 'c.id')
+      ->where('vc.id_usuario', $userId)
+      ->select(
+        'vc.id as vaciado_id', // <-- aquí se obtiene el ID del vaciado
+        'vc.cantidad_vaciada',
+        'tb.nombre as tipo_basura',
+        'c.nombre as nombre_contenedor'
+      )
+      ->latest('vc.created_at')
+      ->first();
 
     // Generar QR como imagen base64
     $result = Builder::create()
-        ->data((string) $userId)
-        ->size(150)
-        ->margin(10)
-        ->build();
+      ->data((string)($vaciado->vaciado_id ?? 'Sin ID')) // usas el ID del vaciado
+      ->size(150)
+      ->margin(10)
+      ->build();
+
 
     $qrBase64 = 'data:image/png;base64,' . base64_encode($result->getString());
 
     $dompdf = App::make("dompdf.wrapper");
     $dompdf->loadView("content.pages.pdf", [
-        'usuario' => $usuario,
-        'id' => $userId,
-        'vaciado' => $vaciado?->cantidad_vaciada ?? 0,
-        'tipoBasura' => $vaciado?->tipo_basura ?? 'Desconocido',
-        'contenedorNombre' => $vaciado?->nombre_contenedor ?? 'Sin contenedor',
-        'qrCode' => $qrBase64,
+      'usuario' => $usuario,
+      'id' => $vaciado->vaciado_id ?? 'Sin ID', // aquí también reemplazas
+      'vaciado' => $vaciado?->cantidad_vaciada ?? 0,
+      'tipoBasura' => $vaciado?->tipo_basura ?? 'Desconocido',
+      'contenedorNombre' => $vaciado?->nombre_contenedor ?? 'Sin contenedor',
+      'qrCode' => $qrBase64,
     ]);
 
     return $dompdf->stream();
-}
+  }
 
 
 }
