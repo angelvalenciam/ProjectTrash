@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('recolectar_residuos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_recolector')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_vaciado_contenedor')->constrained('vaciado_contenedor')->onDelete('cascade');
             $table->timestamps();

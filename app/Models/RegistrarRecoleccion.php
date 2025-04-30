@@ -12,11 +12,11 @@ class RegistrarRecoleccion extends Model
   use HasFactory;
 
   protected $table = 'recolectar_residuos';
-  protected $fillable = ['id_user', 'id_vaciado_contenedor'];
+  protected $fillable = ['id_recolector','id_user', 'id_vaciado_contenedor'];
 
   public function usuario()
   {
-    return $this->belongsTo(User::class, 'id_user');
+    return $this->belongsTo(User::class, 'id_user', );
   }
 
   // Relación con vaciado_contenedor

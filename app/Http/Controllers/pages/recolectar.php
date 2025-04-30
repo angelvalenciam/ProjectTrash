@@ -49,13 +49,14 @@ class recolectar extends Controller
   }
 
   public function store(Request $request){
-
+    $recolectorId = auth()->id();
     $request->validate([
       'id_user' => 'required',
       'id_vaciado' => 'required',
     ]);
 
     RegistrarRecoleccion::create([
+      'id_recolector' => $recolectorId,
       'id_user' => $request->id_user,
       'id_vaciado_contenedor' => $request->id_vaciado,
     ]);
