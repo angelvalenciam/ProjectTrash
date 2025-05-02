@@ -109,8 +109,12 @@ Route::middleware([
 
 
   // Recolector
-// Recolector
+  // Recolector
   Route::get('/recolectar', [$controller_path . '\pages\recolectar', 'index'])->name('recolectar')->middleware('role:recolector');
   Route::post('/recolectar/registrar', [$controller_path . '\pages\recolectar', 'store'])->name('recolectar.registrar')->middleware('role:recolector');
+
+  // Registrar unidad
+  Route::get('/registrarUnidad', [$controller_path . '\pages\RegistrarUnidad', 'index'])->name('registrarunidades-admin')->middleware('role:admin');
+  Route::post('/registrar', [$controller_path . '\pages\RegistrarUnidad', 'store'])->name('registrar-store')->middleware('role:admin');
 });
 

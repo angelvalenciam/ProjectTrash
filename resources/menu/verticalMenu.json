@@ -61,7 +61,7 @@
       "roles": ["admin"]
     },
     {
-      "_comentario": "Control de usuarios",
+      "_comentario": "Registrar recompensas",
       "url": "/recompensasA",
       "icon": "menu-icon tf-icons bx bx-file",
       "name": "Recompensas",
@@ -69,12 +69,21 @@
       "roles": ["admin"]
     },
     {
-      "_comentario": "Control de usuarios",
+      "_comentario": "Registrar unidades",
+      "url": "/registrarUnidad",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Registrar unidades",
+      "slug": "registrarunidades-admin",
+      "roles": ["admin"]
+    },
+    {
+      "_comentario": "Registrar recolectores",
       "url": "/recolectar",
       "icon": "menu-icon tf-icons bx bx-file",
       "name": "Recolectar basura",
       "slug": "recolectar-basura",
       "roles": ["recolector"]
     }
+
   ]
 }

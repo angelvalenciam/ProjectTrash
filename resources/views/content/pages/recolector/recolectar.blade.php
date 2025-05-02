@@ -45,22 +45,26 @@
       </form>
     </div>
   @endif
+
+
   @if(session('success'))
     <div id="alert-success" style="margin-top: 1rem;" class="alert alert-success" role="alert">
       <h6 class="alert-heading mb-1">¡Éxito!</h6>
       <span>{{ session('success') }}</span>
     </div>
-    <script>
-      // Espera 2 segundos y luego oculta la alerta
-      setTimeout(() => {
-        const alert = document.getElementById('alert-success');
-        if (alert) {
-          alert.style.transition = 'opacity 0.5s ease';
-          alert.style.opacity = '0';
-          setTimeout(() => alert.remove(), 500); // se elimina del DOM después de la animación
-        }
-      }, 2000); // 2000 milisegundos = 2 segundos
-    </script>
+  @endif
+
+  <script>
+    // Espera 2 segundos y luego oculta la alerta
+    setTimeout(() => {
+      const alert = document.getElementById('alert-success');
+      if (alert) {
+        alert.style.transition = 'opacity 0.5s ease';
+        alert.style.opacity = '0';
+        setTimeout(() => alert.remove(), 500); // se elimina del DOM después de la animación
+      }
+    }, 2000); // 2000 milisegundos = 2 segundos
+  </script>
   @endif
   @if(request('ticket_id') && (!$vaciado || !$usuario))
     <div class="alert alert-danger mt-4">

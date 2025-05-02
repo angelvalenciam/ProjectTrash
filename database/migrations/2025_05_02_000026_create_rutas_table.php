@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('registrar_unidad', function (Blueprint $table) {
+        Schema::create('rutas', function (Blueprint $table) {
             $table->id();
-            $table->string('num_unidad')->unique();
-            $table->string('marca');
-            $table->string('modelo');
-            $table->string('placa')->unique();
+            $table->string('ciudad')->unique();
+            $table->string('estado');
+            $table->string('colonia');
+            $table->string('num_ruta');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registrar_unidad');
+        Schema::dropIfExists('rutas');
     }
 };
