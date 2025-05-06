@@ -50,8 +50,6 @@
       "slug": "pages-page-3",
       "roles": ["escritor"]
     },
-
-
     {
       "_comentario": "Control de usuarios",
       "url": "/usercontrol",
@@ -83,7 +81,22 @@
       "name": "Recolectar basura",
       "slug": "recolectar-basura",
       "roles": ["recolector"]
+    },
+    {
+      "_comentario": "Registrar Problemas",
+      "url": "/problemas",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Registrar problemas",
+      "slug": "tickets",
+      "roles": ["recolector"]
+    },
+    {
+      "_comentario": "Consultar",
+      "url": "/consulta-recoleccion",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Consultar",
+      "slug": "consulta-recolector",
+      "roles": ["recolector"]
     }
-
   ]
 }

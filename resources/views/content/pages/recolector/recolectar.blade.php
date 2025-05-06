@@ -65,7 +65,7 @@
       }
     }, 2000); // 2000 milisegundos = 2 segundos
   </script>
-  @endif
+
   @if(request('ticket_id') && (!$vaciado || !$usuario))
     <div class="alert alert-danger mt-4">
       No se encontraron datos para el ID ingresado.

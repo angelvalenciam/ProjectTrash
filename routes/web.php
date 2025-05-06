@@ -116,5 +116,13 @@ Route::middleware([
   // Registrar unidad
   Route::get('/registrarUnidad', [$controller_path . '\pages\RegistrarUnidad', 'index'])->name('registrarunidades-admin')->middleware('role:admin');
   Route::post('/registrar', [$controller_path . '\pages\RegistrarUnidad', 'store'])->name('registrar-store')->middleware('role:admin');
+
+  // registrar problemas
+  Route::get('/problemas', [$controller_path . '\pages\RegistrarProblemas', 'index'])->name('tickets-recolector')->middleware('role:recolector');
+  Route::post('/registrar-problema', [$controller_path . '\pages\RegistrarProblemas', 'store'])->name('registrarproblemas-recolector')->middleware('role:recolector');
+
+  //consulta recolector
+  Route::get('/consulta-recoleccion', [$controller_path . '\pages\ConsultaRecoleccion', 'index'])->name('consulta-recolector')->middleware('role:recolector');
+
 });
 
