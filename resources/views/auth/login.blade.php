@@ -5,7 +5,7 @@ $customizerHidden = 'customizer-hide';
 
 @extends('layouts/blankLayout')
 
-@section('title', 'Login')
+
 
 @section('page-style')
 {{-- Page Css files --}}

@@ -123,6 +123,7 @@ Route::middleware([
 
   //consulta recolector
   Route::get('/consulta-recoleccion', [$controller_path . '\pages\ConsultaRecoleccion', 'index'])->name('consulta-recolector')->middleware('role:recolector');
-
+  Route::get('/libros', [$controller_path . '\pages\LibrosController', 'index'])->name('libros')->middleware('role:escritor');
+  Route::post('/libro-register', [$controller_path. '\pages\LibrosController', 'store'])->name('register.store')->middleware('role:escritor');
 });
 
